@@ -4,5 +4,6 @@ datasets
 evaluate
 accelerate
 scikit-learn
-rich
-
+pandas
+tqdm
+requests
