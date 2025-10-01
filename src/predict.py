@@ -7,7 +7,7 @@ def load(model_dir, base_tokenizer="models/distilbert-base-uncased", subfolder=N
     """
     Loads tokenizer and model from either:
       - local directory (subfolder ignored), or
-      - Hugging Face repo id with optional subfolder (e.g., vaibhav2507/cloudops-bert + hdfs/bgl)
+      - Hugging Face repo id with optional subfolder (e.g., vaibhav2507/cloudops-bert + distributed-storage/hpc)
     Returns: tok, mdl, id2label (dict[int->str]), anomaly_idx (int)
     """
     use_subfolder = subfolder if (subfolder and not os.path.isdir(model_dir)) else None
@@ -67,7 +67,7 @@ def predict_line(tok, mdl, id2label, text, max_length=256):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model_dir", required=True, help="HF repo id or local directory")
-    ap.add_argument("--subfolder", default=None, help="HF subfolder: hdfs or bgl (ignored for local dirs)")
+    ap.add_argument("--subfolder", default=None, help="HF subfolder: distributed-storage or hpc (ignored for local dirs)")
     ap.add_argument("--text", help="Single log line")
     ap.add_argument("--file", help="Path to file with one log line per row")
     ap.add_argument("--threshold", type=float, default=0.5, help="Anomaly threshold on P(anomaly)")
