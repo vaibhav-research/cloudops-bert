@@ -56,7 +56,7 @@ Predict anomaly probability for a single log line:
 ```
 python src/predict.py \
   --model_dir vaibhav2507/cloudops-bert \
-  --subfolder hdfs \
+  --subfolder distributed-storage \
   --text "ERROR dfs.DataNode: Lost connection to namenode"
 ```
 Batch inference (file with one log line per row):
@@ -64,20 +64,20 @@ Batch inference (file with one log line per row):
 ```
 python src/predict.py \
   --model_dir vaibhav2507/cloudops-bert \
-  --subfolder hdfs \
+  --subfolder distributed-storage \
   --file samples/sample_logs.txt \
   --threshold 0.5 \
   --jsonl_out predictions.jsonl
 ```
 
 ## 📊 Results
-* HDFS (in-domain, test set)
+* distributed-storage (in-domain, test set)
   * F1: 0.571
   * Precision: 0.992
   * Recall: 0.401
   * AUROC: 0.730
   * Threshold: 0.50 (tuneable)
-- Cross-domain (HDFS → BGL)
+- Cross-domain (distributed-storage → hpc)
 - Performance degrades significantly due to dataset/domain shift (see paper).
 - BGL (training in progress)
 - Will be released as cloudops-bert (subfolder bgl) once full training is complete.
@@ -85,8 +85,8 @@ python src/predict.py \
 ## 📦 Models
 
 * vaibhav2507/cloudops-bert (Hugging Face Hub)
-  * subfolder="hdfs" – HDFS-trained CloudOpsBERT
-  * subfolder="bgl" – BGL-trained CloudOpsBERT (coming soon)
+  * subfolder="distributed-storage" – HDFS-trained CloudOpsBERT
+  * subfolder="hpc" – BGL-trained CloudOpsBERT (coming soon)
 * Each export includes:
   * Model weights (pytorch_model.bin)
   * Config with label mappings (normal, anomaly)
@@ -100,19 +100,19 @@ bash scripts/setup_dirs.sh
 
  2) (optional) Download a local copy of a submodel from Hugging Face
 ```
-bash scripts/fetch_pretrained.sh                # downloads 'hdfs' by default
-SUBFOLDER=bgl bash scripts/fetch_pretrained.sh  # downloads 'bgl'
+bash scripts/fetch_pretrained.sh                # downloads 'distributed-storage' by default
+SUBFOLDER=hpc bash scripts/fetch_pretrained.sh  # downloads 'hpc'
 ```
 
  3) Single-line prediction (directly from HF)
 ```
-bash scripts/predict_line.sh "ERROR dfs.DataNode: Lost connection to namenode" hdfs
+bash scripts/predict_line.sh "ERROR dfs.DataNode: Lost connection to namenode" distributed-storage
 ```
 
  4) Batch prediction (using local model folder)
 ```
 bash scripts/make_sample_logs.sh
-bash scripts/predict_file.sh samples/sample_logs.txt hdfs models/cloudops-bert-hdfs preds/preds_hdfs.jsonl
+bash scripts/predict_file.sh samples/sample_logs.txt distributed-storage models/cloudops-bert-distributed-storage preds/distributed_storage.jsonl
 ```
 
 ## 📚 Related Work
