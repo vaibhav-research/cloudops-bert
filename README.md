@@ -22,6 +22,7 @@ Generic LLMs and BERT models are not optimized for this domain. CloudOpsBERT bri
 
 ## 📂 Repository Structure
 
+```
 cloudops-bert/
 ├── src/                  # Training & inference code
 │   ├── train.py          # Fine-tuning script
@@ -31,6 +32,7 @@ cloudops-bert/
 ├── data/processed/       # Normalized HDFS/BGL datasets (instructions only)
 ├── best_exports/         # Exported best models (for HF upload)
 └── README.md
+```
 
 
 ## 🧪 Training (for reproduction)
